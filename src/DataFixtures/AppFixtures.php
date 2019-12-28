@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Ad;
+use App\Entity\Image;
 use Faker\Factory;
 Use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -13,7 +14,7 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create('FR-fr');
 
-        for ($i=1; $i<=30 ; $i++) {
+        for ($i = 1; $i <= 30 ; $i++) {
             $ad = new Ad();
 
             $title = $faker->sentence();
@@ -27,6 +28,16 @@ class AppFixtures extends Fixture
                 ->setContent($content)
                 ->setPrice(mt_rand(40, 200))
                 ->setRooms(mt_rand(1, 5));
+
+            for ($j = 1; $j < mt_rand(2, 5); $j++) { 
+                $image = new Image;
+
+                $image ->setUrl($faker->imageUrl())
+                       ->setCaption($faker->sentence())
+                       ->setAd($ad);
+                
+                $manager->persist($image);
+            }
 
             $manager->persist($ad);
         }
