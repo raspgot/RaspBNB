@@ -12,7 +12,7 @@ git clone https://github.com/raspgot/RaspBNB
 
 ```bash
 php bin/console doctrine:database:create
-php bin/console make:migration
+(php bin/console make:migration)
 php bin/console doctrine:migrations:migrate
 ```
 Fixtures available in AppFixtures.php with:
@@ -24,5 +24,6 @@ php bin/console doctrine:fixtures:load
 
 ```bash
 symfony check:requirements
+php bin/console cache:clear
 symfony server:start
 ```
