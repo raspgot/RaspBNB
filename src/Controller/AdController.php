@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Ad;
+use App\Form\AdType;
 use App\Repository\AdRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class AdController extends AbstractController
 {
@@ -15,11 +17,34 @@ class AdController extends AbstractController
      */
     public function index(AdRepository $repo)
     {
-        # $repo = $this->getDoctrine()->getRepository(Ad::class);
         $ads = $repo->findAll();
 
         return $this->render('ad/index.html.twig', [
             'ads' => $ads
+        ]);
+    }
+
+    /**
+     * Permet de créer une annonce
+     * 
+     * @Route("/ads/new", name="ads_create")
+     *
+     * @return Response
+     */
+    public function create(Request $request)
+    {
+        $ad = new Ad();
+
+        $form = $this->createForm(AdType::class, $ad);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            dump($ad);
+        }
+
+        return $this->render('ad/new.html.twig', [
+            'form' => $form->createView()
         ]);
     }
     
@@ -36,5 +61,4 @@ class AdController extends AbstractController
             'ad' => $ad
         ]);
     }
-    
 }
