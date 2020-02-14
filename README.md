@@ -6,6 +6,7 @@ BNB like app using [Symfony 4.4.2](https://symfony.com/releases/4.4)
 
 ```bash
 git clone https://github.com/raspgot/RaspBNB
+composer install
 ```
 
 ### Database
